@@ -8,6 +8,7 @@ ifeq ($(SLOW),1)
 else
 	OPT =-O3 -fopenmp -mavx2 -msse4.2
 endif
+OPT += -DPATH_MAX=1024
 
 .PHONY: target
 
