@@ -353,6 +353,17 @@ int main (int argc, char * const argv[]) {
     
     gzWriteNifti(outputfile,warped1,header,m,n,o,1);
 
+    //WRITE DISPLACEMENT FIELD AS IMAGE
+	float *warp=new float[m*n*o*3];
+	for(int i=0;i<sz;i++){
+        warp[i] = vx[i]; warp[i+sz] = ux[i]; warp[i+2*sz] = wx[i];
+	}
+    string out_warp;
+    out_warp.append(args.output_stem);
+    out_warp.append("_warp.nii.gz");
+    gzWriteNifti(out_warp,warp,header,m,n,o,3);
+    delete warp;
+
     cout<<"SSD before registration: "<<SSD0<<" and after "<<SSD1<<"\n";
     
     // if SEGMENTATION of moving image is provided APPLY SAME TRANSFORM
